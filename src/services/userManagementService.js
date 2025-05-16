@@ -33,7 +33,7 @@ class UserManagementService {
             if (roleError) throw roleError;
 
             // Create school profile
-            const { error: schoolError } = await supabaseAdmin
+            const { data: schoolData, error: schoolError } = await supabaseAdmin
                 .from('schools')
                 .insert([{
                     admin_id: user.id,
@@ -41,7 +41,9 @@ class UserManagementService {
                     address,
                     contact_number: contactNumber,
                     is_active: true
-                }]);
+                }])
+                .select()
+                .single();
 
             if (schoolError) throw schoolError;
 
@@ -52,6 +54,10 @@ class UserManagementService {
                     email: user.email,
                     role: 'admin',
                     schoolName
+                },
+                school: {
+                    id: schoolData.id,
+                    name: schoolData.name
                 }
             };
         } catch (error) {
