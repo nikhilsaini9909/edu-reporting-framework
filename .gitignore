@@ -1,0 +1,7 @@
+node_modules
+
+# Ignore the build directory
+build
+dist
+
+# PUSHING OUT ENV JUST FOR TESTING, so team can connect easily
